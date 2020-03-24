@@ -64,4 +64,12 @@ public class CityServiceImpl implements CityService {
     public void deleteCityById(Long id) {
         cityRepository.deleteById(id);
     }
+
+
+    @Override
+    public List<CityDto> getCitiesByNameContaining(String partName){
+        List<City> cities = cityRepository.findByCityNameIgnoreCaseContaining(partName);
+        List<CityDto> cityDtos = cityMapper.toDtos(cities);
+        return cityDtos;
+    }
 }

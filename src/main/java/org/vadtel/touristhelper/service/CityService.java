@@ -14,4 +14,6 @@ public interface CityService {
     void deleteCityById(Long id);
 
     CityDto updateCity(Long id, CityDto cityDto);
+
+    List<CityDto> getCitiesByNameContaining(String partName);
 }
