@@ -19,9 +19,8 @@
 
 
 #### Telegram Bot
-![Image](images/Screenshot_20200324-202006_Telegram.jpg)
-
-![Image](images/Screenshot_20200324-202126_Telegram.jpg)
+<img src="https://github.com/vadtel/tourist-helper/blob/master/images/Screenshot_20200324-202006_Telegram.jpg" alt="drawing" width="350"/>
+<img src="https://github.com/vadtel/tourist-helper/blob/master/images/Screenshot_20200324-202126_Telegram.jpg" alt="drawing" width="350"/>
 
 ### REST web-service(No Auth)
 * **GET /api/city/{id}** - Получение города по ID.
