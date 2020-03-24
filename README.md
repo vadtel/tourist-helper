@@ -1,4 +1,4 @@
-##Test Task
+## Test Task
 Необходимо создать web приложение по управлению собственным туристическим телеграм ботом.
 
     1. Телеграм бот выдает пользователю справочную информацию о введенном городе. 
@@ -9,21 +9,21 @@
     Используемые технологии: SpringBoot, SpringMVC, SpringData, Hibernate, Java не ниже 1.8. Для сборки проекта использовать Maven.
     Исходный код приложения должен быть залит на GitHub, в файле readme указать, что необходимо для запуска (в том числе имя телеграм бота и его токен).
 
-##Install
-Версия Java 11  
-Скрипт для создания базы и заполнения `src/main/resources/initDB.sql`. Указать информацию о БД `spring.datasource.url`, `spring.datasource.username`, `spring.datasource.password`, `spring.jpa.properties.hibernate.dialect` в `application.properties`.  
-Имя бота _@vadtel_travel_bot_. Все данные внесены в `application.properties`.  
-Сборка `mvnw clean package` - на выходе получим WAR в папке target. Переименовать в ROOT.war, положить в папку Tomcat/webapps - удалив оттуда все. Запустить tomcat  
-Либо `mvnw spring-boot:run` - сервер запуститься и будет доступен по http://localhost:8080/
+## Install
+* Версия Java 11  
+* Скрипт для создания базы и заполнения `src/main/resources/initDB.sql`. Указать информацию о БД `spring.datasource.url`, `spring.datasource.username`, `spring.datasource.password`, `spring.jpa.properties.hibernate.dialect` в `application.properties`.  
+* Имя бота _@vadtel_travel_bot_. Все данные внесены в `application.properties`.  
+* Сборка `mvnw clean package` - на выходе получим WAR в папке target. Переименовать в ROOT.war, положить в папку Tomcat/webapps - удалив оттуда все. Запустить tomcat  
+* Либо `mvnw spring-boot:run` - сервер запуститься и будет доступен по http://localhost:8080/
 
 
 
-####Telegram Bot
+#### Telegram Bot
 ![Image](images/Screenshot_20200324-202006_Telegram.jpg)
 
 ![Image](images/Screenshot_20200324-202126_Telegram.jpg)
 
-###REST web-service(No Auth)
+### REST web-service(No Auth)
 * **GET /api/city/{id}** - Получение города по ID.
 * **GET /api/city** - Получение списка всех городов: 
 
