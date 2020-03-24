@@ -80,6 +80,7 @@ public class CityController {
     public ResponseEntity<Void> deleteCityById(@PathVariable("id") Long id) {
         cityService.deleteCityById(id);
         ResponseEntity<Void> response = new ResponseEntity<>(HttpStatus.OK);
+        log.info("{} -- Delete city with ID={}", log.getName(), id);
         return response;
     }
 

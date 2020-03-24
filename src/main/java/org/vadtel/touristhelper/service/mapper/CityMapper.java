@@ -25,8 +25,12 @@ public interface CityMapper {
     City toEntity(CityDto cityDto);
 
     default City update(City city, CityDto cityDto) {
-        city.setCityName(cityDto.getCityName());
         City sourceCity = toEntity(cityDto);
+        String cityName = sourceCity.getCityName();
+
+        if (cityName != null && !cityName.isBlank()) {
+            city.setCityName(cityName);
+        }
 
         city.setCityInfos(Stream
                 .of(city.getCityInfos(), sourceCity.getCityInfos())
