@@ -9,13 +9,13 @@ import org.vadtel.touristhelper.dao.repository.CityRepository;
 import org.vadtel.touristhelper.dto.CityDto;
 import org.vadtel.touristhelper.dto.CityInfoDto;
 import org.vadtel.touristhelper.entity.City;
-import org.vadtel.touristhelper.exception.CityNotFoundException;
 import org.vadtel.touristhelper.service.CityInfoService;
 import org.vadtel.touristhelper.service.mapper.CityMapper;
 
 import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -33,11 +33,21 @@ public class CityInfoServiceImpl implements CityInfoService {
     }
 
     @Override
-    public List<CityInfoDto> getAllCityInfoByCityName(String cityName) {
-        City city = cityRepository.findByCityName(cityName).orElseThrow(() -> new CityNotFoundException(String.format("Город с NAME=%s не найден", cityName)));
-        CityDto cityDto = cityMapper.toDto(city);
-        List<CityInfoDto> cityInfoDtos = cityDto.getCityInfoDtos();
+    public List<String> getAllCityInfoByCityName(String cityName) {
+        City city = cityRepository.findByCityName(cityName).orElse(null);
 
-        return cityInfoDtos != null ? cityInfoDtos : Collections.emptyList();
+        if (city != null) {
+            CityDto cityDto = cityMapper.toDto(city);
+            List<CityInfoDto> cityInfoDtos = cityDto.getCityInfos();
+            List<String> cityInfos = Collections.emptyList();
+            if (cityInfoDtos != null) {
+                cityInfos = cityInfoDtos.stream()
+                        .map(CityInfoDto::getCityInfo)
+                        .collect(Collectors.toList());
+            }
+            return cityInfos;
+        } else {
+            return null;
+        }
     }
 }

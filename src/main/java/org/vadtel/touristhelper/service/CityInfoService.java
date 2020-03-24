@@ -8,5 +8,5 @@ public interface CityInfoService {
 
     void deleteCityInfoByIdAndCityId( Long cityInfoId, Long cityId);
 
-    List<CityInfoDto> getAllCityInfoByCityName(String cityName);
+    List<String> getAllCityInfoByCityName(String cityName);
 }

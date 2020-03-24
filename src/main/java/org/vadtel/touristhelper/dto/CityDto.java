@@ -15,6 +15,6 @@ public class CityDto {
 
     private String cityName;
 
-    private List<CityInfoDto> cityInfoDtos;
+    private List<CityInfoDto> cityInfos;
 
 }
