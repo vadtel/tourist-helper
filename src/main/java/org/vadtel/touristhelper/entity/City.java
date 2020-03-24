@@ -26,6 +26,6 @@ public class City {
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @OneToMany(mappedBy = "city", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CityInfo> cityInfos;
 }

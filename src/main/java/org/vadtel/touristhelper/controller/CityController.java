@@ -54,9 +54,33 @@ public class CityController {
 
     @PostMapping("")
     public ResponseEntity<CityDto> createCity(@RequestBody CityDto cityDto) {
-        CityDto savedCityDto = cityService.saveCity(cityDto);
-        log.error("{} -- Save city with ID={} and name {}", log.getName(), savedCityDto.getId(), savedCityDto.getCityName());
-        ResponseEntity<CityDto> response = new ResponseEntity<>(savedCityDto, HttpStatus.OK);
+        try {
+            CityDto savedCityDto = cityService.saveCity(cityDto);
+            ResponseEntity<CityDto> response = new ResponseEntity<>(savedCityDto, HttpStatus.OK);
+            log.info("{} -- Save city with ID={} and name {}", log.getName(), savedCityDto.getId(), savedCityDto.getCityName());
+            return response;
+        } catch (Exception e) {
+            log.error("{} -- City with name {} not saved", log.getName(), cityDto.getCityName());
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CityDto> updateCity(@PathVariable("id") Long id,
+                                              @RequestBody CityDto cityDto) {
+        CityDto updatedCityDto = cityService.updateCity(id, cityDto);
+        ResponseEntity<CityDto> response = new ResponseEntity<>(updatedCityDto, HttpStatus.OK);
+        log.info("{} -- Update city with ID={} with information {}", log.getName(), id, cityDto.toString());
         return response;
     }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCityById(@PathVariable("id") Long id) {
+        cityService.deleteCityById(id);
+        ResponseEntity<Void> response = new ResponseEntity<>(HttpStatus.OK);
+        return response;
+    }
+
 }

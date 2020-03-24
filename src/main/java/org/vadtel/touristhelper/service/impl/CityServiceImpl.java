@@ -13,6 +13,7 @@ import org.vadtel.touristhelper.service.mapper.CityMapper;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -44,10 +45,23 @@ public class CityServiceImpl implements CityService {
     @Override
     public CityDto saveCity(CityDto cityDto) {
         City city = cityMapper.toEntity(cityDto);
-        city.getCityInfos().forEach(x -> x.setCity(city));
+        Optional.ofNullable(city.getCityInfos())
+                .ifPresent(c -> c.forEach(x -> x.setCity(city)));
         City savedCity = cityRepository.save(city);
         return cityMapper.toDto(savedCity);
     }
 
+    @Override
+    public CityDto updateCity(Long id, CityDto cityDto) {
+        City city = cityRepository.findById(id)
+                .orElseThrow(() -> new CityNotFoundException(String.format("Город с ID=%s не найден", id)));
+        City updatedCity = cityMapper.update(city, cityDto);
+        cityRepository.save(updatedCity);
+        return cityMapper.toDto(updatedCity);
+    }
 
+    @Override
+    public void deleteCityById(Long id) {
+        cityRepository.deleteById(id);
+    }
 }

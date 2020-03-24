@@ -3,14 +3,19 @@ package org.vadtel.touristhelper.service.mapper;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
 import org.vadtel.touristhelper.dto.CityDto;
 import org.vadtel.touristhelper.entity.City;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = CityInfoMapper.class)
 public interface CityMapper {
+
+
     @Mapping(target = "cityInfoDtos", source = "cityInfos")
     CityDto toDto(City city);
 
@@ -18,5 +23,21 @@ public interface CityMapper {
 
     @InheritInverseConfiguration
     City toEntity(CityDto cityDto);
+
+    default City update(City city, CityDto cityDto) {
+        city.setCityName(cityDto.getCityName());
+        City sourceCity = toEntity(cityDto);
+
+        city.setCityInfos(Stream
+                .of(city.getCityInfos(), sourceCity.getCityInfos())
+                .filter(Objects::nonNull)
+                .flatMap(Collection::stream)
+                .distinct()
+                .filter(Objects::nonNull)
+                .peek(c -> c.setCity(city))
+                .collect(Collectors.toList())
+        );
+        return city;
+    }
 
 }
