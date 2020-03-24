@@ -25,16 +25,29 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public CityDto getCityById(Long id) {
-        City city = cityRepository.findById(id).orElseThrow(() -> new CityNotFoundException(id));
+        City city = cityRepository.findById(id)
+                .orElseThrow(() -> new CityNotFoundException(String.format("Город с ID=%s не найден", id)));
         CityDto cityDto = cityMapper.toDto(city);
         return cityDto;
     }
 
     @Override
-    public List<CityDto> getAllCity(){
+    public List<CityDto> getAllCity() {
         List<City> allCities = cityRepository.findAll();
+        if (allCities.isEmpty()) {
+            throw new CityNotFoundException("Городов в базе нет");
+        }
         List<CityDto> cityDtos = cityMapper.toDtos(allCities);
-
         return cityDtos;
     }
+
+    @Override
+    public CityDto saveCity(CityDto cityDto) {
+        City city = cityMapper.toEntity(cityDto);
+        city.getCityInfos().forEach(x -> x.setCity(city));
+        City savedCity = cityRepository.save(city);
+        return cityMapper.toDto(savedCity);
+    }
+
+
 }

@@ -1,6 +1,5 @@
 package org.vadtel.touristhelper.bot;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -15,12 +14,11 @@ import org.vadtel.touristhelper.service.CityService;
 @Component
 public class TouristBot extends TelegramLongPollingBot {
 
+    private final CityService cityService;
     @Value("${telegram.botusername}")
     private String botUSerName;
     @Value("${telegram.token}")
     private String botToken;
-
-    private final CityService cityService;
 
     @Autowired
     public TouristBot(DefaultBotOptions options, CityService cityService) {

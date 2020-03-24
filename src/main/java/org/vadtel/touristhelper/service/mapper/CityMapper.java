@@ -9,7 +9,7 @@ import org.vadtel.touristhelper.entity.City;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring")
 public interface CityMapper {
     @Mapping(target = "cityInfoDtos", source = "cityInfos")
     CityDto toDto(City city);
